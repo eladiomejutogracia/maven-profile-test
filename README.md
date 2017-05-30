@@ -1,6 +1,8 @@
 # maven-profile-test
 Ejecución de tests unitarios, de integración y aceptación con cucumber en maven a través de perfiles y properties.
 
+Los tests unitarios y de integración son similares. Los de aceptación lanzan un feature de cucumber.
+
 En funcion del perfil a ejecutar:
 
 mvn surefire:test -Punit-test
