@@ -1,0 +1,167 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com</groupId>
+	<artifactId>paradigma</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>profiletests</name>
+
+
+	<profiles>
+		<profile>
+			<id>unit-test</id>
+			<build>
+				<plugins>
+					<plugin>
+						<!-- mvn surefire:test -Punit-test -->
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>2.12</version>
+						<configuration>
+							<includes>
+								<include>**/*Test.java</include>
+							</includes>
+							<excludes>
+								<exclude>**/*AT.java</exclude>
+								<exclude>**/*IT.java</exclude>
+							</excludes>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>test</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+			<properties>
+				<skip.integration.tests>true</skip.integration.tests>
+				<skip.unit.tests>false</skip.unit.tests>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>integration-test</id>
+			<build>
+				<plugins>
+					<plugin>
+						<!-- mvn failsafe:integration-test -Pintegration-test -->
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<version>2.16</version>
+						<configuration>
+							<testSourceDirectory>test/integration</testSourceDirectory>
+							<skipTests>${skip.integration.tests}</skipTests>
+							<includes>
+								<include>**/*IT.java</include>
+							</includes>
+							<excludes>
+								<exclude>**/*AT.java</exclude>
+								<exclude>**/*Test.java</exclude>
+							</excludes>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>integration-test</goal>
+									<goal>verify</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+			<properties>
+				<skip.integration.tests>false</skip.integration.tests>
+				<skip.unit.tests>true</skip.unit.tests>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>acceptance-test</id>
+			<build>
+				<plugins>
+					<plugin>
+						<!-- mvn failsafe:integration-test -P acceptance-test -->
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<version>2.16</version>
+						<configuration>
+							<testSourceDirectory>test/acceptance</testSourceDirectory>
+							<skipTests>${skip.integration.tests}</skipTests>
+							<includes>
+								<include>**/*AT.java</include>
+							</includes>
+							<excludes>
+								<exclude>**/*IT.java</exclude>
+								<exclude>**/*Test.java</exclude>
+							</excludes>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>integration-test</goal>
+									<goal>verify</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+			<properties>
+				<skip.integration.tests>false</skip.integration.tests>
+				<skip.unit.tests>true</skip.unit.tests>
+			</properties>
+		</profile>
+	</profiles>
+
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/test/resources</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<!-- mvn surefire:test -Punit-test -->
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.16</version>
+				<configuration>
+					<skipTests>${skip.unit.tests}</skipTests>
+					<includes>
+						<include>**/*Test.java</include>
+					</includes>
+					<excludes>
+						<exclude>**/*AT.java</exclude>
+						<exclude>**/*IT.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>1.2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-junit</artifactId>
+			<version>1.2.5</version>
+		</dependency>
+	</dependencies>
+
+
+</project>
