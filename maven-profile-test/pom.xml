@@ -10,6 +10,9 @@
 	<profiles>
 		<profile>
 			<id>unit-test</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<build>
 				<plugins>
 					<plugin>
